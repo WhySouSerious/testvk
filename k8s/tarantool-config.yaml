@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tarantool-config
+data:
+  tarantool.lua: |
+    box.cfg{
+        listen = 3301
+    }

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tarantool-deployment
+  labels:
+    app: tarantool
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tarantool
+  template:
+    metadata:
+      labels:
+        app: tarantool
+    spec:
+      containers:
+      - name: tarantool
+        image: tarantool/tarantool:3.0
+        ports:
+        - containerPort: 3301
+        volumeMounts:
+        - name: tarantool-config
+          mountPath: /etc/tarantool
+        - name: tarantool-data
+          mountPath: /var/lib/tarantool
+      volumes:
+      - name: tarantool-config
+        configMap:
+          name: tarantool-config
+      - name: tarantool-data
+        emptyDir: {}
